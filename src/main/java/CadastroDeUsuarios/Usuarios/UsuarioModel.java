@@ -2,6 +2,8 @@ package CadastroDeUsuarios.Usuarios;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @SuppressWarnings("ALL")
 @Entity
@@ -16,6 +18,10 @@ public class UsuarioModel {
 
     public UsuarioModel() {
     }
+    @Getter
+    @Setter
+    private String password;
+
     public String getNome() {
         return nome;
     }

@@ -22,6 +22,10 @@ public class UsuarioController {
     public List<UsuarioModel> listar() {
         return service.listar();
     }
+    @GetMapping("/{id}")
+    public UsuarioModel buscarPorId(@PathVariable Long id) {
+        return service.buscarPorId(id);
+    }
     @PutMapping("/{id}")
     public UsuarioModel atualizar(@PathVariable Long id, @RequestBody UsuarioModel usuario) {
         return service.atualizar(id, usuario);
@@ -30,4 +34,5 @@ public class UsuarioController {
     public void deletar(@PathVariable Long id) {
         service.deletar(id);
     }
+
 }

@@ -1,17 +1,20 @@
 package CadastroDeUsuarios.Usuarios;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
 public class UsuarioService {
-
+    private final PasswordEncoder passwordEncoder;
     private final UsuarioRepository repository;
-
-    public UsuarioService(UsuarioRepository repository) {
+    @Autowired
+    public UsuarioService(PasswordEncoder passwordEncoder, UsuarioRepository repository) {
+        this.passwordEncoder = passwordEncoder;
         this.repository = repository;
     }
-
     public UsuarioModel salvar(UsuarioModel usuario) {
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         return repository.save(usuario);
     }
 
@@ -34,4 +37,9 @@ public class UsuarioService {
 
         repository.delete(usuario);
     }
+    public UsuarioModel buscarPorId(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+    }
+
 }
