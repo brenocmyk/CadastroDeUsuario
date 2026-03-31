@@ -41,5 +41,12 @@ public class UsuarioService {
         return repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
     }
-
+    public UsuarioModel autenticar(String email, String password) {
+        UsuarioModel usuario = repository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        if (!passwordEncoder.matches(password, usuario.getPassword())) {
+            throw new RuntimeException("Senha inválida");
+        }
+        return usuario;
+    }
 }

@@ -35,4 +35,11 @@ public class UsuarioController {
         service.deletar(id);
     }
 
+    @PostMapping("/login")
+    public String login(@RequestBody LoginDTO dto) {
+        UsuarioModel usuario = service.autenticar(dto.getEmail(), dto.getPassword());
+
+        return JwtUtil.gerarToken(usuario.getEmail(), "USER");
+    }
+
 }
